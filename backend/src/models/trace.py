@@ -7,6 +7,9 @@ class Trace(Base):
  dataset_id=Column(Integer,ForeignKey('datasets.id'),nullable=False)
  plan_id=Column(Integer,ForeignKey('plans.id'),nullable=False)
  status=Column(String(20),default='queued',nullable=False)
+ # 'memory' keeps the original in-memory engine; 'spill' streams through disk.
+ # existing rows predate the column and are treated as 'memory' at read time.
+ mode=Column(String(10),nullable=False,server_default='memory',default='memory')
  result=Column(JSON,nullable=True)
  error=Column(String(1000),nullable=True)
  snapshot=Column(JSON,nullable=False)
